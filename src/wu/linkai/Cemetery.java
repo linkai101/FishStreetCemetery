@@ -43,8 +43,10 @@ class Cemetery {
                     tombstones.put(burialDate, new HashSet<Tombstone>() {{ add(tomb); }});
                 } else {
                     HashSet<Tombstone> newSet = tombstones.get(burialDate);
-                    newSet.add(tomb);
-                    tombstones.put(burialDate, newSet);
+                    if (newSet.contains(tomb)) {
+                        newSet.add(tomb);
+                        tombstones.put(burialDate, newSet);
+                    }
                 }
             }
         } catch(FileNotFoundException e) {
@@ -54,7 +56,14 @@ class Cemetery {
     }
 
     public int size() {
-        return tombstones.size();
+        int size = 0;
+
+        Iterator<HashSet<Tombstone>> i = this.tombstones.values().iterator();
+        while (i.hasNext()) {
+            size += i.next().size();
+        }
+
+        return size;
     }
 
     public HashSet<Tombstone> query(Date date) {

@@ -102,12 +102,16 @@ class FishStreet {
                             System.out.println("Search results from " + date1.format() + " to " + date2.format() +  ":");
                         }
                         Cemetery.printEntries(results);
-                    } else {
-                        if (!address.isEmpty()) {
 
-                        } else {
-                            System.out.println("No entries found at" + address + " from " + date1.format() + " to " + date2.format());
+                        double averageAge = 0;
+                        Iterator<Tombstone> i = results.iterator();
+                        while (i.hasNext()) {
+                            averageAge += i.next().getDeathAge();
                         }
+                        averageAge /= results.size();
+                        System.out.println("Total results: " + results.size() + " | Average death age: " + averageAge);
+                    } else {
+                        System.out.println("No entries found at" + address + " from " + date1.format() + " to " + date2.format());
                     }
                     break;
                 }
