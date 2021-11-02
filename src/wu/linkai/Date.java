@@ -51,4 +51,12 @@ class Date implements Comparable<Date> {
         else if (this.day > date.getDay()) return 1;
         return 0;
     }
+
+    public static String formatAge(double age) {
+        double years = (int)(age);
+        int remainingDays = (int)((age-years)*365);
+        double months = (int)(remainingDays/30);
+        double days = remainingDays%30;
+        return (int)years + " years, " + (int)months + " months, " + (int)days + " days";
+    }
 }

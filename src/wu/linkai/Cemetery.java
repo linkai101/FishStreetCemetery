@@ -35,7 +35,8 @@ class Cemetery {
                     deathAge /= 365;
                 } else {
                     deathAge = (int) Double.parseDouble(rawDeathAge);
-                    deathAge += (Double.parseDouble(rawDeathAge)-deathAge)*100/12;
+                    String decimalStr = String.valueOf(Math.round((Double.parseDouble(rawDeathAge)-deathAge)*100.0)/100.0);
+                    deathAge += Integer.parseInt(decimalStr.substring(decimalStr.indexOf(".")+1))/12.0;
                 }
 
                 Tombstone tomb = new Tombstone(name, burialDate, deathAge, address);
@@ -43,7 +44,14 @@ class Cemetery {
                     tombstones.put(burialDate, new HashSet<Tombstone>() {{ add(tomb); }});
                 } else {
                     HashSet<Tombstone> newSet = tombstones.get(burialDate);
-                    if (newSet.contains(tomb)) {
+
+                    boolean hasDuplicates = false;
+                    Iterator<Tombstone> i = newSet.iterator();
+                    while (i.hasNext()) {
+                        if (tomb.equals(i.next())) hasDuplicates = true;
+                    }
+
+                    if (!hasDuplicates) {
                         newSet.add(tomb);
                         tombstones.put(burialDate, newSet);
                     }

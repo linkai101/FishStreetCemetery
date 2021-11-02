@@ -90,7 +90,7 @@ class FishStreet {
                         Iterator<Tombstone> i = results.iterator();
                         while (i.hasNext()) {
                             Tombstone current = i.next();
-                            if (address.equals(current.getAddress())) filteredResults.add(current);
+                            if (current.getAddress().contains(address)) filteredResults.add(current);
                         }
                         results = filteredResults;
                     }
@@ -109,7 +109,7 @@ class FishStreet {
                             averageAge += i.next().getDeathAge();
                         }
                         averageAge /= results.size();
-                        System.out.println("Total results: " + results.size() + " | Average death age: " + averageAge);
+                        System.out.println("Total results: " + results.size() + " | Average death age: " + Date.formatAge(averageAge));
                     } else {
                         System.out.println("No entries found at" + address + " from " + date1.format() + " to " + date2.format());
                     }
